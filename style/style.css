@@ -1,0 +1,23 @@
+.app-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+   
+    
+}
+#input{
+    display: block;
+    
+}
+
+.register-container{
+    border: 3px solid rgba(100, 56, 221, 0.466);
+    align-self: center;
+    padding: 20px 20px;
+    border-radius: 5px;
+    
+}
+ form{
+    justify-items: center;
+    
+ }

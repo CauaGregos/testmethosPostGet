@@ -1,0 +1,10 @@
+a{
+    font-size: 30px;
+    background-color: rgba(144, 92, 241, 0.74);
+    color: rgba(10, 10, 10, 0.74);
+    border-radius: 5px;
+    margin: 5px;
+}
+a::hover{
+    width: 1%;
+}
