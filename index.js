@@ -22,9 +22,9 @@ async function ativacaoDoServidor(){
 
 
     app.post ('/aluno',rotas.cadastrarAluno)
-    app.put('/aluno/:nome',rotas.atualizarAluno)
-    app.delete('/alunoDel/:nome',rotas.excluirAluno)
-    app.get('/aluno/:nome', rotas.getAluno)
+    app.put('/attAluno/:id',rotas.atualizarAluno)
+    app.delete('/alunoDel/:id',rotas.excluirAluno)
+    app.get('/aluno/:id', rotas.getAluno)
     app.get('/alunos',rotas.recupereTodos)
     
     console.log('Servidor ativo')

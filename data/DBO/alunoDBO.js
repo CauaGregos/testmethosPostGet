@@ -2,11 +2,14 @@ class Aluno {
     #nome
     #idade
     #cep
+    #id
 
-    constructor(nome, idade, cep) {
+    constructor(id,nome, idade, cep) {
+        this.#id = id
         this.#nome = nome
         this.#idade = idade
         this.#cep = cep
+        
     }
 
     getNome() {
@@ -19,6 +22,10 @@ class Aluno {
 
     getCep() {
         return this.#cep;
+    }
+
+    getId() {
+        return this.#id;
     }
 
     setNome(nome) {
@@ -41,10 +48,17 @@ class Aluno {
 
         this.#cep = cep;
     }
+
+    setId(id) {
+        if (id === undefined || typeof id !== 'number' || id <= 0 )
+        throw ('id inválido')
+
+        this.#id = id;
+    }
 }
 
-function novo(nome, idade, cep) {
-    return new Aluno(nome, idade, cep)
+function novo(id,nome, idade, cep) {
+    return new Aluno(id,nome, idade, cep)
 }
 
 module.exports = {novo}

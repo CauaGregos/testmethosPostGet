@@ -13,12 +13,12 @@ async function cadastrarAluno(aluno) {
     catch (excecao) { return false; }
 }
 
-async function atualizarAluno(nome) {
+async function atualizarAluno(aluno) {
     const conexao = await bd.getConexao();
     if (conexao == null) return null;
     try {
-        const sql = 'UPDATE alunos SET Nome = ?, Idade = ?, CEP = ? WHERE Nome = ?';
-        const dados = [aluno.nome,aluno.idade,aluno.cep];
+        const sql = 'UPDATE alunos SET Nome = ?, Idade = ?, CEP = ? WHERE id = ?';
+        const dados = [aluno.getNome(),aluno.getIdade(),aluno.getCep(),aluno.getId()];
         await conexao.query(sql, dados);
         return true;
     }
@@ -26,12 +26,12 @@ async function atualizarAluno(nome) {
 }
 
 
-async function excluirAluno(nome) {
+async function excluirAluno(id) {
     const conexao = await bd.getConexao();
     if (conexao == null) return null;
     try {
-        const sql = 'DELETE FROM alunos WHERE Nome = ?';
-        const dados = [nome];
+        const sql = 'DELETE FROM alunos WHERE id = ?';
+        const dados = [id];
         await conexao.query(sql, dados);
         return true;
     }
@@ -40,12 +40,13 @@ async function excluirAluno(nome) {
     }
 }
 
-async function getAluno(nome) {
+async function getAluno(id) {
     const conexao = await bd.getConexao();
+    console.log(id)
     if (conexao == null) return null;
     try {
-        const sql = "SELECT * FROM alunos WHERE Nome = ?"
-        const dados = [nome];
+        const sql = "SELECT * FROM alunos WHERE id = ?"
+        const dados = [id];
         const [linhas] = await conexao.execute(sql, dados);
         return linhas;
     }

@@ -31,20 +31,29 @@ async function cadastrarAluno(req, res) {
 }
 
 async function atualizarAluno(req, res) {
-    if (Object.values(req.body).length != 3 || !req.body.nome || !req.body.idade || !req.body.cep) {
+    if (Object.values(req.body).length != 4|| !req.body.id  || !req.body.nome || !req.body.idade || !req.body.cep) {
         const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
         return res.status(422).json(erro)
     }
-
     let aluno;
     try {
-        aluno = AlunoDBO.novo(req.body.nome, req.body.idade, req.body.cep)
+        aluno = AlunoDBO.novo(req.body.id,req.body.nome, req.body.idade, req.body.cep)
     } catch (error) {
         const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
         return res.status(422).json(erro);
     }
 
-    let ret = await AlunoDAO.getAluno(req.body.nome)
+
+    const id=req.params.id; // pegando o codigo
+
+    // testanto se foi tentado alterar o codigo do livro
+    if (id!=aluno.getId()) {
+        const erro=comunicado.novo('TMC','Mudança de id','Tentativa de mudar id do Aluno').object; 
+        return res.status(400).json(erro); 
+
+    }
+
+    let ret = await AlunoDAO.getAluno(id)
     if (ret === null) {
         const erro=comunicado.novo('CBD','Sem conexao com o BD','Não foi possivel estabelecer conexao com o banco de dados').object; 
         return res.status(500).json(erro)
@@ -65,24 +74,24 @@ async function atualizarAluno(req, res) {
     }
 
     if (ret === false) {
-        const erro=comunicado.novo('LJE','Livro já existe','Já existem livros cadastrados com esse codigo').object; 
+        const erro=comunicado.novo('LJE','Aluno nao existe','nao existe aluno cadastrado com esse id').object; 
         return res.status(409).json(erro)
     }
 
-    const sucesso=comunicado.novo('RBS','Remoçao bem sucedida','O livro foi removido com sucesso').object; 
+    const sucesso=comunicado.novo('RBS','Atualizacao bem sucedida','O aluno foi atualizado com sucesso').object; 
     return res.status(201).json(sucesso);
 }
 
 async function excluirAluno(req, res) {
 
-    if (Objects.values(req.body).length != 0) {
+    if (Object.values(req.body).length != 0) {
 
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        const erro=comunicado.novo('Ddi','Fornecimento de dados sem proposito','Foram fornecidos dados desnecessarios').object;
         return res.status(422).json(erro);
 
     }
 
-    const nome = req.body.nome; 
+    const nome = req.params.nome; 
     let ret = await AlunoDAO.getAluno(nome); 
     //Tratando erros do recupereUm
 
@@ -92,11 +101,12 @@ async function excluirAluno(req, res) {
     }
 
     if (ret === false) { 
-        const erro=comunicado.novo('LJE','Livro já existe','Já existem livros cadastrados com esse codigo').object; 
+        const erro=comunicado.novo('FNC','Falha no comando de SQL','O comando de SQL apresenta algum erro').object; 
         return res.status(409).json(erro);
     }
 
     if (ret.length == 0) {
+        const erro=comunicado.novo('LNE','inexistente','Não há aluno cadastrado com esse nome').object; 
         return res.status(404).json(erro);
     }
 
