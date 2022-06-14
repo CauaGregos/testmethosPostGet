@@ -3,15 +3,23 @@ const bd = require('./data/bd')
 const rotas = require('./data/rotas/rotas')
 var cors = require('cors')
 
+
 function middleWareGlobal(req,res,next){
     next();
 }
 
 async function ativacaoDoServidor(){
     const app = express();
-    // app.use(cors)
     app.use(express.json());
     app.use(middleWareGlobal)
+
+    app.use((req, res, next) => {
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+        res.header('Access-Control-Allow-Headers', 'Content-Type');
+        next();
+    });
+
 
     app.post ('/aluno',rotas.cadastrarAluno)
     app.put('/aluno/:nome',rotas.atualizarAluno)

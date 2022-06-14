@@ -4,15 +4,17 @@ const saveUser = () => {
         var idade =  document.getElementById('idade').value;
         var cep =  document.getElementById('cep').value;
 
-
-        axios({
-            method:'POST',
-            url:'http://localhost:3000/aluno',
-            data:JSON.stringify({
-                Nome: nome,
-                Idade: parseInt(idade),
-                CEP: cep
-            })
-        })
+        const json = {
+            "Nome": nome,
+	        "Idade": idade,
+	        "CEP": cep
+        }
+        
+        axios.post('http://localhost:3000/aluno',json
+        ).then((e) => location.reload() ,
+        alert("Dados Enviados com sucesso"))
+        .catch((err) => console.log(err))
+        
+        
 }
 document.getElementById('saveData').addEventListener('click', saveUser)
