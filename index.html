@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,200;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/button.css">
+    <link rel="stylesheet" href="css/records.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <script src="main.js" defer></script>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    <title>CRUD</title>
+</head>
+<body>
+    <header>
+        <h1 class="header-title">Cadastro de Alunos</h1>
+    </header>
+    <main>
+        <button class="button blue mobile" id="cadastrarCliente">Cadastrar Aluno</button>
+    
+        <table id="tbUser" class="records">
+            <thead>
+                <tr>
+                    <th>RA</th>
+                    <th>Nome</th>
+                    <th>Idade</th>
+                    <th>Cep</th>
+                </tr>
+            </thead>
+            <tbody>
+               
+            </tbody>
+        </table>
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <header class="modal-header">
+                    <h2>Novo Cliente</h2>
+                    <span class="modal-close" id="modalClose">&#10006;</span>
+                </header>
+                <form id="form" class="modal-form">
+                    <input id="id" type="number" class="modal-field" placeholder="RA do Aluno" required>
+                    <input id="nome" type="text" class="modal-field" placeholder="Nome do Aluno" required>
+                    <input id="idade" type="number" class="modal-field" placeholder="Idade do Aluno" required>
+                    <input id="cep" type="text" class="modal-field" placeholder="CEP do Usuário" required>
+                </form>
+                <footer class="modal-footer">
+                    <button id="salvar" class="button green">Salvar</button>
+                    <button id="cancelar" class="button blue">Cancelar</button>
+                </footer>
+            </div>
+        </div>
+        <div class="modal" id="modal2">
+            <div class="modal-content">
+                <header class="modal-header">
+                    <h2 id="title"></h2>
+                    <span class="modal-close" id="modalClose2">&#10006;</span>
+                </header>
+                <form id="form" class="modal-form">
+                    <input id="upid" type="number" class="modal-field" placeholder="RA do Aluno" required>
+                    <input id="upnome" type="text" class="modal-field" placeholder="Nome do Aluno" required>
+                    <input id="upidade" type="number" class="modal-field" placeholder="Idade do Aluno" required>
+                    <input id="upcep" type="number" class="modal-field" placeholder="CEP do Usuário" required>
+                </form>
+                <footer class="modal-footer">
+                    <button id="salvarUpdate" class="button green">Salvar</button>
+                    <button id="cancelarUpdate" class="button blue">Cancelar</button>
+                </footer>
+            </div>
+        </div>
+
+        <div class="modal" id="modal3">
+            <div class="modal-content">
+                <header class="modal-header">
+                    <h2 id="title2"></h2>
+                    <span class="modal-close" id="modalClose3">&#10006;</span>
+                </header>
+                <table id="tbCity" class="records">
+                    <thead>
+                        <tr>
+                            <th>Rua</th>
+                            <th>Bairro</th>
+                            <th>Cidade</th>
+                            <th>Cep</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody1">
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
