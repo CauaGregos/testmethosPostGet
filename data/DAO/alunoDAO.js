@@ -5,8 +5,8 @@ async function cadastrarAluno(aluno) {
     if (conexao == null) return null;
 
     try {
-        const sql = "insert into alunos (Nome,Idade,CEP) values(?,?,?)";
-        const dados = [aluno.getNome(),aluno.getIdade(),aluno.getCep()];
+        const sql = "insert into alunos (id,Nome,Idade,CEP) values(?,?,?,?)";
+        const dados = [aluno.getId(),aluno.getNome(),aluno.getIdade(),aluno.getCep()];
         await conexao.query(sql, dados);
         return true;
     }
@@ -42,7 +42,7 @@ async function excluirAluno(id) {
 
 async function getAluno(id) {
     const conexao = await bd.getConexao();
-    console.log(id)
+   
     if (conexao == null) return null;
     try {
         const sql = "SELECT * FROM alunos WHERE id = ?"

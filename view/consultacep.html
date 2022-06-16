@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listar dados</title>
+    <title>Consulta CEP</title>
     <link rel="stylesheet" href="../style/style.css">
 </head>
 <body>
     <div class="app-container">
         <div class="register-container">
-            <h1>Lista dos Dados</h1>
+            <h1>Consulta CEP</h1>
+            <div class="register-container">
+                <input class="id" type="number" name="Id" id="id" placeholder="Digite o RA do aluno..">
+                
+                <input type="submit" value="Consultar" id="saveData" >
+            </div>
             <div id="listdata">
                 <table>
                     <thead>
@@ -30,9 +35,9 @@
          const listdata = () => {
                
                 var table = document.getElementById('requestList');
-                axios.get('http://localhost:3000/alunos').then(response => {const data = response.data
+                axios.get('https://api.postmon.com.br/v1/cep/'+"13056314").then(response => {const data = response.data
              
-
+                console.log(data.cidade)
                 for(let i = 0; i<data.length; i++){
                     let tr = table.insertRow();
 
@@ -41,10 +46,10 @@
                     let idade = tr.insertCell();
                     let cep = tr.insertCell();
 
-                    RA.innerText = data[i].id
-                    nome.innerText = data[i].Nome
-                    idade.innerText = data[i].Idade
-                    cep.innerText = data[i].CEP
+                    RA.innerText = data.cidade
+                    nome.innerText = data.bairro
+                    idade.innerText = data.cep
+                    cep.innerText = data.logradouro
                 }
                 
             }).catch()

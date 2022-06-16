@@ -11,11 +11,28 @@
     <div class="app-container">
         <div class="register-container">
             <h1>Deletar Dados</h1>
-            <input class="nome" type="text" name="Nome" id="input" placeholder="Digite o nome para deletar...">
-            <button>Deletar</button>
+            <input class="id" type="number" name="Id" id="id" placeholder="Digite o RA para deletar..">
+            <input type="submit" value="Deletar" id="delete" >
             
         </div>
         <a href="index.html">Voltar as opções</a>
     </div>
+    <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <script>
+        const deleteUser = () => {
+    
+            var id =  document.getElementById('id').value;
+            
+            var question = confirm("Deseja mesmo excluir o RA: "+id+"?")
+
+            if (question) {
+            axios.delete('http://localhost:3000/alunoDel/'+id).then((e) => location.reload(),
+            alert("Dados deletados com sucesso"))
+            .catch((err) => JSON.stringify(err))
+            }
+            else{location.reload()}
+        }
+        document.getElementById('delete').addEventListener('click', deleteUser)
+    </script>
 </body>
 </html>

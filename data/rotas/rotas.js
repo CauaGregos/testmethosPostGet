@@ -5,19 +5,18 @@ const AlunoDBO = require('../DBO/alunoDBO');
 const comunicado=require('./comunicado.js');
 
 async function cadastrarAluno(req, res) {
-    // if (Object.values(req.body).length != 3 || !req.body.nome || !req.body.idade || !req.body.cep) {
-    //     const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
-    //     return res.status(422).json(erro)
-    // }
-    console.log(req.body.Nome+ req.body.Idade + req.body.CEP)
+    if (Object.values(req.body).length != 4 || !req.body.id|| !req.body.Nome || !req.body.Idade || !req.body.CEP) {
+        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        return res.status(422).json(erro)
+    }
+    
     let aluno;
     try {
-        aluno = AlunoDBO.novo(req.body.Nome, req.body.Idade, req.body.CEP)
+        aluno = AlunoDBO.novo(req.body.id,req.body.Nome, req.body.Idade, req.body.CEP)
     } catch (error) {
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um aluno(nome, idade e cep)').object;
         return res.status(422).json(erro);
     }
-    console.log(aluno.getNome())
     const ret = await AlunoDAO.cadastrarAluno(aluno)
 
     if (ret === undefined) {
@@ -32,14 +31,14 @@ async function cadastrarAluno(req, res) {
 
 async function atualizarAluno(req, res) {
     if (Object.values(req.body).length != 4|| !req.body.id  || !req.body.nome || !req.body.idade || !req.body.cep) {
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um aluno(nome, idade e cep)').object;
         return res.status(422).json(erro)
     }
     let aluno;
     try {
         aluno = AlunoDBO.novo(req.body.id,req.body.nome, req.body.idade, req.body.cep)
     } catch (error) {
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        const erro=comunicado.novo('Ddi','Dados inesperados','Falha ao gerar DBO do Aluno.').object;
         return res.status(422).json(erro);
     }
 
@@ -59,7 +58,7 @@ async function atualizarAluno(req, res) {
         return res.status(500).json(erro)
     }
     if (ret === false) {
-        const erro=comunicado.novo('LJE','Livro já existe','Já existem livros cadastrados com esse codigo').object; 
+        const erro=comunicado.novo('LJE','Houve um problema','Não foi possivel atualizar o dados do Aluno').object; 
         return res.status(409).json(erro)
     }
     if (ret.length == 0) {
@@ -83,7 +82,7 @@ async function atualizarAluno(req, res) {
 }
 
 async function excluirAluno(req, res) {
-
+    
     if (Object.values(req.body).length != 0) {
 
         const erro=comunicado.novo('Ddi','Fornecimento de dados sem proposito','Foram fornecidos dados desnecessarios').object;
@@ -91,8 +90,8 @@ async function excluirAluno(req, res) {
 
     }
 
-    const nome = req.params.nome; 
-    let ret = await AlunoDAO.getAluno(nome); 
+    const id = req.params.id; 
+    let ret = await AlunoDAO.getAluno(id); 
     //Tratando erros do recupereUm
 
     if (ret === null) {
@@ -106,12 +105,12 @@ async function excluirAluno(req, res) {
     }
 
     if (ret.length == 0) {
-        const erro=comunicado.novo('LNE','inexistente','Não há aluno cadastrado com esse nome').object; 
+        const erro=comunicado.novo('LNE','inexistente','Não há aluno cadastrado com esse id').object; 
         return res.status(404).json(erro);
     }
 
     // removendo o livro
-    ret = await AlunoDAO.excluirAluno(nome);
+    ret = await AlunoDAO.excluirAluno(id);
 
     //Tratando erros do remova
     if (ret === null) {
@@ -127,7 +126,7 @@ async function excluirAluno(req, res) {
     }
 
     // se chegou aqui é porque deu certo
-    const sucesso = comunicado.novo('RBS', 'Remoçao bem sucedida', 'O livro foi removido com sucesso').object;
+    const sucesso = comunicado.novo('RBS', 'Remoçao bem sucedida', 'O Aluno foi removido com sucesso').object;
     return res.status(201).json(sucesso);
 
 }
@@ -161,7 +160,7 @@ async function getAluno(req, res) {
 
     if (ret.length==0) {
 
-        const erro=comunicado.novo('LNE','Livro inexistente','Não há livro cadastrado com esse código').object; 
+        const erro=comunicado.novo('LNE','Aluno inexistente','Não há um aluno cadastrado com esse id').object; 
         return res.status(404).json(erro); 
         
     }
