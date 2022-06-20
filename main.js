@@ -5,9 +5,68 @@
     document.getElementById('modal').classList.remove('active')
     }
 
-    const openModal2 = (nome) => {document.getElementById('modal2').classList.add('active')
+    //---------------PREVENCOES AO INSERIR DADOS----------
+    const formInput = document.querySelector("#modal");
+    formInput.addEventListener("keypress",function(e){
+     if(!checkChar(e)){
+         e.preventDefault();
+         alert("Não é possivel digitar caracteres especiais")
+     }
+    })
+    const formInput2 = document.querySelector("#modal2");
+    formInput2.addEventListener("keypress",function(e){
+     if(!checkChar(e)){
+         e.preventDefault();
+         alert("Não é possivel digitar caracteres especiais")
+     }
+    })
+
+    const inputId = document.querySelector("#id");
+    inputId.onkeyup = () => { if (inputId.value.length>5){
+        inputId.value = ''
+        alert("Não é possivel digitar mais que 5 numeros")
+    }}
+    const inputIdade = document.querySelector("#idade");
+    inputIdade.onkeyup = () => { if (inputIdade.value.length>2){
+        inputIdade.value = ''
+        alert("Não é possivel digitar mais que 2 numeros")
+    }}
+    const inputCep = document.querySelector("#cep");
+    inputCep.onkeyup = () => { if (inputCep.value.length>8){
+        inputCep.value = ''
+        alert("Não é possivel digitar mais que 8 numeros")
+    }}
+    //---------------------------------------------------------
+
+
+
+    const openModal2 = (id,nome,idade,cep) => {document.getElementById('modal2').classList.add('active')
+  
     document.querySelector('#title').innerHTML = "Atualizando dados de "+nome
+
+       document.getElementById('upid').value = id
+        document.getElementById('upnome').value = nome
+        document.getElementById('upidade').value = idade
+        document.getElementById('upcep').value = cep
+        
+        const inputupId = document.querySelector("#upid");
+        inputupId.onkeyup = () => { if (inputupId.value.length>1){
+            inputupId.value = id
+            alert("Não é possivel alterar o RA do aluno")
+        }}
+        const inputupIdade = document.querySelector("#upidade");
+        inputupIdade.onkeyup = () => { if (inputupIdade.value.length>2){
+            inputupIdade.value = idade
+            alert("Não é possivel digitar mais que 2 numeros")
+        }}
+        const inputupCep = document.querySelector("#upcep");
+        inputupCep.onkeyup = () => { if (inputupCep.value.length>8){
+            inputupCep.value = cep
+            alert("Não é possivel digitar mais que 8 numeros")
+        }}
+
     }
+
     const closeModal2 = () => {
         document.getElementById('modal2').classList.remove('active')
     }
@@ -62,7 +121,7 @@
                     <td>${data[i].Idade}</td>
                     <td>${data[i].CEP}</td>
                     <td>
-                        <button type="button" class="button green" onclick="openModal2('${data[i].Nome}')">editar</button>
+                        <button type="button" class="button green" onclick="openModal2(${data[i].id},'${data[i].Nome}',${data[i].Idade},'${data[i].CEP}')">editar</button>
                         <button type="button" class="button red" onclick="deleteUser(${data[i].id},'${data[i].Nome}')">excluir</button>
                         <button type="button" class="button blue" onclick="openModal3('${data[i].Nome}',${data[i].CEP})">Consultar CEP</button>
                     </td>
@@ -115,7 +174,6 @@
     const listdata = (cep) => {
         
         axios.get('https://api.postmon.com.br/v1/cep/'+cep).then(response => {const data = response.data
-                
                 const newRow = document.createElement('tr')
                 newRow.innerHTML = `
                     <td id ="tst">${data.logradouro}</td>
@@ -124,7 +182,6 @@
                     <td id ="tst">${data.cep}</td>
                 `
                 document.querySelector('#tbCity>tbody').appendChild(newRow)
-            
         }).catch(err => {const newRow = document.createElement('tr')
         newRow.innerHTML = `
         <td id ="tst">DADOS NAO LOCALIZADOS ERR:404 CEP NAO ENCONTRADO</td>
@@ -133,6 +190,16 @@
 
     }
 
+
+    function checkChar(e) {
+        const char = String.fromCharCode(e.keyCode);
+        const pattern = '[a-zA-Z0-9]'
+
+        if(char.match(pattern)){
+            return true
+        }
+        else return false
+    }
 
 //eventos
 createRow()

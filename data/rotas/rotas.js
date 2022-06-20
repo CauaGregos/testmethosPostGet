@@ -30,7 +30,7 @@ async function cadastrarAluno(req, res) {
 }
 
 async function atualizarAluno(req, res) {
-    console.log(req.body.id,req.body.Nome, req.body.Idade, req.body.CEP)
+    
     if (Object.values(req.body).length != 4|| !req.body.id  || !req.body.Nome || !req.body.Idade || !req.body.CEP) {
         const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um aluno(nome, idade e cep)').object;
         return res.status(422).json(erro)
