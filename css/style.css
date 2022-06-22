@@ -5,6 +5,7 @@
 }
 input{
     display: block;   
+    width: 200px;
 }
 
 .register-container{
@@ -12,6 +13,7 @@ input{
     align-self: center;
     padding: 20px 20px;
     border-radius: 5px;
+    
 }
 table{
     width: 50%;
