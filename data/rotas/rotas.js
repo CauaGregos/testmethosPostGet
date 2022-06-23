@@ -48,7 +48,7 @@ async function atualizarAluno(req, res) {
     const id=req.params.id; // pegando o codigo
 
     // testanto se foi tentado alterar o codigo do livro
-    if (id!=aluno.getId()) {
+    if (id!=aluno.id) {
         const erro=comunicado.novo('TMC','Mudança de id','Tentativa de mudar RA do Aluno').object; 
         return res.status(400).json(erro); 
 
