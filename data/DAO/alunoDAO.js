@@ -6,7 +6,7 @@ async function cadastrarAluno(aluno) {
 
     try {
         const sql = "insert into alunos (id,Nome,Idade,CEP) values(?,?,?,?)";
-        const dados = [aluno.getId(),aluno.getNome(),aluno.getIdade(),aluno.getCep()];
+        const dados = [aluno.id,aluno.nome,aluno.idade,aluno.cep];
         await conexao.query(sql, dados);
         return true;
     }
@@ -18,7 +18,7 @@ async function atualizarAluno(aluno) {
     if (conexao == null) return null;
     try {
         const sql = 'UPDATE alunos SET Nome = ?, Idade = ?, CEP = ? WHERE id = ?';
-        const dados = [aluno.getNome(),aluno.getIdade(),aluno.getCep(),aluno.getId()];
+        const dados = [aluno.nome,aluno.idade,aluno.cep,aluno.id];
         await conexao.query(sql, dados);
         return true;
     }

@@ -12,44 +12,44 @@ class Aluno {
         
     }
 
-    getNome() {
+    get nome() {
         return this.#nome;
     }
 
-    getIdade() {
+    get idade() {
         return this.#idade;
     }
 
-    getCep() {
+    get cep() {
         return this.#cep;
     }
 
-    getId() {
+    get id() {
         return this.#id;
     }
 
-    setNome(nome) {
+    set nome(nome) {
         if (nome === undefined || typeof nome !== 'string' || nome ==="" )
         throw ('Nome inválidp')
 
         this.#nome = nome;
     }
 
-    setIdade(idade) {
+    set idade(idade) {
         if (idade === undefined || typeof idade !== 'number' || idade <= 0 )
         throw ('Nome inválidp')
 
         this.#idade = idade;
     }
 
-    setCep(cep) {
+    set cep(cep) {
         if (cep === undefined || typeof cep !== 'number' || cep <= 0 )
         throw ('Nome inválidp')
 
         this.#cep = cep;
     }
 
-    setId(id) {
+    set id(id) {
         if (id === undefined || typeof id !== 'number' || id <= 0 )
         throw ('id inválido')
 

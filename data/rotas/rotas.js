@@ -49,7 +49,7 @@ async function atualizarAluno(req, res) {
 
     // testanto se foi tentado alterar o codigo do livro
     if (id!=aluno.getId()) {
-        const erro=comunicado.novo('TMC','Mudança de id','Tentativa de mudar id do Aluno').object; 
+        const erro=comunicado.novo('TMC','Mudança de id','Tentativa de mudar RA do Aluno').object; 
         return res.status(400).json(erro); 
 
     }
@@ -142,7 +142,7 @@ async function getAluno(req, res) {
         
     }
 
-    const nome=req.body.nome; // pego o codigo
+    const nome=req.perams.nome; // pego o codigo
 
     const ret = await AlunoDAO.getAluno(nome); // utilizo o recupera um
 
