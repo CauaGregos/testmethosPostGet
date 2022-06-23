@@ -5,7 +5,7 @@ class Aluno {
     #id
 
     constructor(id,nome, idade, cep) {
-        this.#id = id
+        this.id = id
         this.#nome = nome
         this.#idade = idade
         this.#cep = cep
