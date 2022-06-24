@@ -208,7 +208,7 @@
     function checkChar(e) {
         const char = String.fromCharCode(e.keyCode);
         // sequencia que desejo que exista no codigo
-        const pattern = '[a-zA-Z0-9]'
+        const pattern = '[a-zA-Z0-9 ]'
 
         if(char.match(pattern)){
             return true

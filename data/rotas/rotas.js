@@ -6,7 +6,7 @@ const comunicado=require('./comunicado.js');
 
 async function cadastrarAluno(req, res) {
     if (Object.values(req.body).length != 4 || !req.body.id|| !req.body.Nome || !req.body.Idade || !req.body.CEP) {
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um livro(codigo, nome e preço)').object;
+        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 4 informações esperadas de um Aluno').object;
         return res.status(422).json(erro)
     }
     
@@ -32,7 +32,7 @@ async function cadastrarAluno(req, res) {
 async function atualizarAluno(req, res) {
     
     if (Object.values(req.body).length != 4|| !req.body.id  || !req.body.Nome || !req.body.Idade || !req.body.CEP) {
-        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 3 informações esperadas de um aluno(nome, idade e cep)').object;
+        const erro=comunicado.novo('Ddi','Dados inesperados','Não foram fornecidos exatamente as 4 informações esperadas de um aluno(nome, idade e cep)').object;
         return res.status(422).json(erro)
     }
     
@@ -47,7 +47,7 @@ async function atualizarAluno(req, res) {
 
     const id=req.params.id; // pegando o codigo
 
-    // testanto se foi tentado alterar o codigo do livro
+    // testanto se foi tentado alterar o codigo do aluno
     if (id!=aluno.id) {
         const erro=comunicado.novo('TMC','Mudança de id','Tentativa de mudar RA do Aluno').object; 
         return res.status(400).json(erro); 
@@ -60,7 +60,7 @@ async function atualizarAluno(req, res) {
         return res.status(500).json(erro)
     }
     if (ret === false) {
-        const erro=comunicado.novo('LJE','Houve um problema','Não foi possivel atualizar o dados do Aluno').object; 
+        const erro=comunicado.novo('LJE','Aluno nao existe','nao existe aluno cadastrado com esse id').object; 
         return res.status(409).json(erro)
     }
     if (ret.length == 0) {
@@ -112,7 +112,7 @@ async function excluirAluno(req, res) {
         return res.status(404).json(erro);
     }
 
-    // removendo o livro
+    // removendo o aluno
     ret = await AlunoDAO.excluirAluno(id);
 
     //Tratando erros do remova
@@ -142,9 +142,9 @@ async function getAluno(req, res) {
         
     }
 
-    const nome=req.perams.nome; // pego o codigo
+    const id=req.perams.id; // pego o codigo
 
-    const ret = await AlunoDAO.getAluno(nome); // utilizo o recupera um
+    const ret = await AlunoDAO.getAluno(id); // utilizo o recupera um
 
     //Trato os erros do recupera um
     if (ret===null) {
@@ -168,7 +168,7 @@ async function getAluno(req, res) {
         
     }
 
-    //Se chegou ate aqui deu tudo certo, entao retorno o meu livro
+    //Se chegou ate aqui deu tudo certo, entao retorno o meu aluno
     return res.status(200).json(ret);
 
 
